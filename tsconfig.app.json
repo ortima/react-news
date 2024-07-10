@@ -25,7 +25,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@pages/*": ["src/pages/*"],
+      "@api/*": ["src/api/*"]
     }
   },
   "include": ["src"]
