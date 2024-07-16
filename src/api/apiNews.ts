@@ -8,10 +8,11 @@ export const getNews = async (
   page_number = 1,
   page_size = 10,
   category: string,
+  keywords: string,
 ): Promise<GetNewsResponse> => {
   try {
     const response = await axios.get<GetNewsResponse>(`${BASE_URL}search`, {
-      params: { apiKey: API_KEY, page_number, page_size, category },
+      params: { apiKey: API_KEY, page_number, page_size, category, keywords },
     });
     return response.data;
   } catch (err: unknown) {
