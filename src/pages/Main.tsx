@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getNews } from "@api/apiNews";
+import { getCategories, getNews } from "@api/apiNews";
+import Categories from "@components/Categories/Categories";
 import NewsBanner from "@components/NewsBanner/NewsBanner";
 import NewsList from "@components/NewsList/NewsList";
 import Pagination from "@components/Pagination/Pagination";
@@ -10,23 +11,55 @@ const Main = () => {
   const [news, setNews] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [error, setError] = useState<string | null>(null);
+
   const pageSize = 10;
   const totalPages = 10;
 
   const fetchNews = async (currentPage: number) => {
     try {
       setIsLoading(true);
-      const response = await getNews(currentPage, pageSize);
+      const response = await getNews(
+        currentPage,
+        pageSize,
+        selectedCategory === "All" ? "" : selectedCategory,
+      );
       setNews(response.news);
       setIsLoading(false);
-    } catch (error) {
-      throw new Error("FAILED FETCH");
+      setError(null);
+    } catch (err) {
+      setIsLoading(false);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Произошла неизвестная ошибка при получении новостей.");
+      }
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await getCategories();
+      setCategories(["All", ...response.categories]);
+      setError(null);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Произошла неизвестная ошибка при получении категорий.");
+      }
     }
   };
 
   useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
     fetchNews(currentPage);
-  }, [currentPage]);
+  }, [currentPage, selectedCategory]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -46,6 +79,14 @@ const Main = () => {
 
   return (
     <main className="flex w-full flex-col gap-8">
+      <Categories
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+
+      {error && <div className="error-message">{error}</div>}
+
       {news.length > 0 && !isLoading ? (
         <NewsBanner item={news[0]} />
       ) : (
