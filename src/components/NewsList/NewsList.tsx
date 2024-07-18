@@ -1,4 +1,5 @@
 import NewsItem from "@components/NewsItem/NewsItem";
+import { withSkeleton } from "@helpers/hocs/withSkeleton";
 import { News } from "src/@types";
 
 interface INewsList {
@@ -14,4 +15,6 @@ const NewsList: React.FC<INewsList> = ({ news }) => {
   );
 };
 
-export default NewsList;
+const NewsListWithSkeleton = withSkeleton(NewsList, "item", 10);
+
+export default NewsListWithSkeleton;

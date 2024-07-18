@@ -1,7 +1,7 @@
 interface ICategories {
   categories: string[];
   setSelectedCategory: (category: string) => void;
-  selectedCategory: string;
+  selectedCategory: string | null;
 }
 
 const Categories: React.FC<ICategories> = ({

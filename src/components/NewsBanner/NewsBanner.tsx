@@ -1,11 +1,17 @@
 import Image from "@components/Image/Image";
 import { formatTimeAgo } from "@helpers/formatTimeAgo";
+import { withSkeleton } from "@helpers/hocs/withSkeleton";
 import { News } from "src/@types";
 
 interface INewsBanner {
-  item: News;
+  item?: News;
 }
+
 const NewsBanner = ({ item }: INewsBanner) => {
+  if (!item) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="flex w-full flex-col gap-3">
       <Image image={item.image} />
@@ -17,4 +23,10 @@ const NewsBanner = ({ item }: INewsBanner) => {
   );
 };
 
-export default NewsBanner;
+const NewsBannerWithSkeleton = withSkeleton<INewsBanner>(
+  NewsBanner,
+  "banner",
+  1,
+);
+
+export default NewsBannerWithSkeleton;
