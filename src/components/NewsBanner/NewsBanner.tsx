@@ -1,6 +1,5 @@
 import Image from "@components/Image/Image";
 import { formatTimeAgo } from "@helpers/formatTimeAgo";
-import { withSkeleton } from "@helpers/hocs/withSkeleton";
 import { News } from "src/@types";
 
 interface INewsBanner {
@@ -23,10 +22,4 @@ const NewsBanner = ({ item }: INewsBanner) => {
   );
 };
 
-const NewsBannerWithSkeleton = withSkeleton<INewsBanner>(
-  NewsBanner,
-  "banner",
-  1,
-);
-
-export default NewsBannerWithSkeleton;
+export default NewsBanner;

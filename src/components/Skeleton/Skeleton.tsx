@@ -1,12 +1,25 @@
+import React from "react";
+import styles from "./styles.module.css";
+
 interface ISkeleton {
   count: number;
   type: "banner" | "item";
+  direction: "column" | "row";
 }
-const Skeleton: React.FC<ISkeleton> = ({ count = 1, type = "banner" }) => {
+const Skeleton: React.FC<ISkeleton> = ({
+  count = 1,
+  type = "banner",
+  direction = "column",
+}) => {
   return (
     <>
       {count > 1 ? (
-        <ul className="flex flex-col gap-3">
+        <ul
+          className={
+            direction === "column" ? styles.columnList : styles.rowList
+          }
+        >
+          {" "}
           {[...Array(count)].map((_, index) => (
             <li
               key={index}

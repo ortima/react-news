@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
 
-export const useFetch = <T, P>(func: (params: P) => Promise<T>, params: P) => {
-  const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+type FetchFunction<T> = () => Promise<T>;
 
-  const stringParams = JSON.stringify(params);
+export const useFetch = <T>(fetchFunction: FetchFunction<T>) => {
+  const [data, setData] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
-        const result = await func(params);
+        const result = await fetchFunction();
         setData(result);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Произошла неизвестная ошибка.");
-        }
+      } catch (error) {
+        setError(error as Error);
       } finally {
         setIsLoading(false);
       }
-    })();
-  }, [func, stringParams]);
+    };
+
+    fetchData();
+  }, [fetchFunction]);
 
   return { data, isLoading, error };
 };
