@@ -6,7 +6,7 @@ export interface News {
   author: string;
   image: string;
   language: string;
-  category: string[];
+  category: string;
   published: Date;
 }
 

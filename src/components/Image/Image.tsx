@@ -1,4 +1,4 @@
-import React, { ImgHTMLAttributes } from "react";
+import { ImgHTMLAttributes } from "react";
 
 interface IImage extends ImgHTMLAttributes<HTMLImageElement> {
   image: string;

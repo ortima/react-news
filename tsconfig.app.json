@@ -30,7 +30,8 @@
       "@helpers/*": ["src/helpers/*"],
       "@pages/*": ["src/pages/*"],
       "@api/*": ["src/api/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }
