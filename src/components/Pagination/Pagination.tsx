@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface IPagination {
+export interface IPagination {
   totalPages: number;
   currentPage: number;
   handlePreviousPage: () => void;

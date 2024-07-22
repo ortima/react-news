@@ -4,7 +4,7 @@ import NewsBanner from "../NewsBanner/NewsBanner";
 import styles from "./style.module.css";
 
 interface INewsBanner {
-  banners?: News[];
+  banners: News[] | null;
 }
 
 const BannersList: React.FC<INewsBanner> = ({ banners }) => {
