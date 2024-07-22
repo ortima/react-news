@@ -1,14 +1,14 @@
+import { getLatestNews } from "@api/apiNews";
 import BannersList from "@components/BannersList/BannersList.tsx";
-import { News } from "src/@types";
+import { useFetch } from "@helpers/hooks/useFetch";
+import { GetNewsResponse } from "src/@types";
 
-interface ILatestNews {
-  banners: News[];
-  isLoading: boolean;
-}
-const LatestNews: React.FC<ILatestNews> = ({ banners, isLoading }) => {
+const LatestNews = () => {
+  const { data, isLoading } = useFetch<GetNewsResponse>(getLatestNews);
+
   return (
     <section className="flex w-full flex-col gap-8">
-      <BannersList banners={banners} isLoading={isLoading} />
+      <BannersList banners={data && data?.news} isLoading={isLoading} />
     </section>
   );
 };

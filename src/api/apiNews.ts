@@ -33,6 +33,25 @@ export const getNews = async ({
   }
 };
 
+export const getLatestNews = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}latest-news`, {
+      params: {
+        apiKey: API_KEY,
+      },
+    });
+    return response.data;
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(`Axios error: ${err.message}`);
+    } else if (err instanceof Error) {
+      throw new Error(`Error: ${err.message}`);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
+  }
+};
+
 export const getCategories = async () => {
   try {
     const response = await axios.get(`${BASE_URL}available/categories`, {
