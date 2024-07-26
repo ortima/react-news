@@ -25,11 +25,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@pages/*": ["src/pages/*"],
-      "@store/*": ["src/store/*"]
+      "@/*": ["src/*"]
     },
     "allowSyntheticDefaultImports": true
   },
