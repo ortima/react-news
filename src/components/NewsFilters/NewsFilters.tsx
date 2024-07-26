@@ -1,33 +1,35 @@
-import { useCallback } from "react";
-import { getCategories } from "@api/apiNews.ts";
-import { useFetch } from "@helpers/hooks/useFetch.ts";
+import Categories from "@components/Categories/Categories";
+import Search from "@components/Search/Search";
+import { useAppDispatch } from "@store/index";
+import { useGetCategoriesQuery } from "@store/services/newsApi";
+import { setFilters } from "@store/slices/newsSlice";
 import { Filters } from "src/@types";
-import Categories from "../Categories/Categories";
-import Search from "../Search/Search";
 
 interface NewsFiltersProps {
   filters: Filters;
-  changeFilter: (filterName: keyof Filters, value: string | null) => void;
 }
 
-const NewsFilters: React.FC<NewsFiltersProps> = ({ filters, changeFilter }) => {
-  const fetchCategories = useCallback(() => getCategories(), []);
+const NewsFilters: React.FC<NewsFiltersProps> = ({ filters }) => {
+  const { data } = useGetCategoriesQuery(null);
 
-  const { data: dataCategories } = useFetch(fetchCategories);
-
+  const dispatch = useAppDispatch();
   return (
     <div className="flex w-full flex-col gap-3">
-      {dataCategories ? (
+      {data ? (
         <Categories
-          categories={dataCategories.categories}
+          categories={data.categories}
           selectedCategory={filters.category}
-          setSelectedCategory={(category) => changeFilter("category", category)}
+          setSelectedCategory={(category) =>
+            dispatch(setFilters({ key: "category", value: category }))
+          }
         />
       ) : null}
 
       <Search
         keywords={filters.keywords}
-        setKeywords={(keywords) => changeFilter("keywords", keywords)}
+        setKeywords={(keywords) =>
+          dispatch(setFilters({ key: "keywords", value: keywords }))
+        }
       />
     </div>
   );

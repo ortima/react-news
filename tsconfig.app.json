@@ -29,7 +29,7 @@
       "@constants/*": ["src/constants/*"],
       "@helpers/*": ["src/helpers/*"],
       "@pages/*": ["src/pages/*"],
-      "@api/*": ["src/api/*"]
+      "@store/*": ["src/store/*"]
     },
     "allowSyntheticDefaultImports": true
   },

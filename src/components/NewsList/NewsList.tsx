@@ -3,7 +3,7 @@ import { withSkeleton } from "@helpers/hocs/withSkeleton";
 import { News } from "src/@types";
 
 interface INewsList {
-  news: News[] | null;
+  news: News[] | undefined;
 }
 const NewsList: React.FC<INewsList> = ({ news }) => {
   return (
