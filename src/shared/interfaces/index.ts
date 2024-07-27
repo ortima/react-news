@@ -87,3 +87,6 @@ export type CategoriesType =
   | "mobile"
   | "estate"
   | "funny";
+
+export type SkeletonType = "banner" | "item";
+export type DirectionType = "row" | "column";

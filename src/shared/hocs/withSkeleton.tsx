@@ -1,18 +1,19 @@
-import { ComponentType } from "react";
+import React from "react";
+import { DirectionType, SkeletonType } from "../interfaces";
 import Skeleton from "../ui/Skeleton/Skeleton";
 
-export type WithSkeletonProps = {
+export interface SkeletonProps {
   isLoading: boolean;
-};
+  direction?: DirectionType;
+  type: SkeletonType;
+}
 
-export const withSkeleton = <P extends object>(
-  Component: ComponentType<P>,
-  type: "banner" | "item",
+export function withSkeleton<P extends object>(
+  Component: React.ComponentType<P>,
   count: number,
-  direction: "row" | "column",
-) => {
-  return function WithSkeleton(props: P & WithSkeletonProps) {
-    const { isLoading, ...restProps } = props;
+) {
+  return function WithSkeleton(props: SkeletonProps & P) {
+    const { isLoading, type, direction = "column", ...restProps } = props;
 
     if (isLoading) {
       return <Skeleton type={type} count={count} direction={direction} />;
@@ -20,4 +21,4 @@ export const withSkeleton = <P extends object>(
 
     return <Component {...(restProps as P)} />;
   };
-};
+}
