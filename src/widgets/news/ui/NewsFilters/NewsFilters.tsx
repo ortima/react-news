@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@/app/appStore";
-import { useGetCategoriesQuery } from "@/entities/category/api/categoriesApi";
+import { CategoriesType } from "@/entities/category";
 import { setFilters } from "@/entities/news/model/newsSlice";
 import { Categories } from "@/features/category";
 import { Search } from "@/features/search";
@@ -7,17 +7,17 @@ import { Filters } from "@/shared/interfaces";
 
 interface NewsFiltersProps {
   filters: Filters;
+  categories: CategoriesType[];
 }
 
-const NewsFilters: React.FC<NewsFiltersProps> = ({ filters }) => {
-  const { data } = useGetCategoriesQuery(null);
-
+const NewsFilters: React.FC<NewsFiltersProps> = ({ filters, categories }) => {
   const dispatch = useAppDispatch();
+
   return (
     <div className="flex w-full flex-col gap-3">
-      {data ? (
+      {categories ? (
         <Categories
-          categories={data.categories}
+          categories={categories}
           selectedCategory={filters.category}
           setSelectedCategory={(category) =>
             dispatch(setFilters({ key: "category", value: category }))
